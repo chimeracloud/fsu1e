@@ -5,7 +5,7 @@ Python FastAPI Cloud Run service that downloads historic results from The Racing
 
 ## Architecture
 - Python 3.12 + FastAPI on Cloud Run
-- GCP project: `chimera`, region: `europe-west1`
+- GCP project: `chiops`, region: `europe-west2` (London)
 - GCS bucket: `fsu1e-racingapi-historic-raw`
 - Firestore collection: `fsu-admin-settings`, document: `fsu1e`
 - Credentials from Google Secret Manager (secret: `racingapi-credentials`)

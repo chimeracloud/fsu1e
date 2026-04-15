@@ -2,8 +2,8 @@ FSU_ID = "fsu1e"
 FSU_NAME = "Racing API Historic Ingest"
 FSU_VERSION = "1.0.0"
 
-GCP_PROJECT = "chimera"
-GCP_REGION = "europe-west1"
+GCP_PROJECT = "chiops"
+GCP_REGION = "europe-west2"
 GCS_BUCKET = "fsu1e-racingapi-historic-raw"
 SECRET_NAME = "racingapi-credentials"
 
@@ -17,7 +17,8 @@ DEFAULT_MAX_RPS = 1.0
 DEFAULT_MAX_RETRIES = 5
 BACKOFF_BASE = 2
 
-SERVICE_ACCOUNT = "fsu1e@chimera.iam.gserviceaccount.com"
+SERVICE_ACCOUNT = "991649774709-compute@developer.gserviceaccount.com"
+CLOUD_RUN_URL = "https://fsu1e-991649774709.europe-west2.run.app"
 
 DEFAULT_SETTINGS = {
     "base_url": RACING_API_BASE_URL,

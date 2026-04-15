@@ -9,7 +9,7 @@ from sse_starlette.sse import EventSourceResponse
 
 from app.config import (
     FSU_ID, FSU_NAME, FSU_VERSION, GCP_PROJECT, GCP_REGION,
-    GCS_BUCKET, FIRESTORE_COLLECTION, SERVICE_ACCOUNT,
+    GCS_BUCKET, FIRESTORE_COLLECTION, SERVICE_ACCOUNT, CLOUD_RUN_URL,
     EDITABLE_FIELDS, VALIDATION_RULES,
 )
 from app.firestore_client import load_settings, save_settings
@@ -169,7 +169,7 @@ async def config():
         "bucket": GCS_BUCKET,
         "firestore_collection": FIRESTORE_COLLECTION,
         "service_account": SERVICE_ACCOUNT,
-        "cloud_run_url": f"https://fsu1e-racingapi-historic-{GCP_REGION}.run.app",
+        "cloud_run_url": CLOUD_RUN_URL,
         "deployed_at": datetime.now(timezone.utc).isoformat(),
     }
 
