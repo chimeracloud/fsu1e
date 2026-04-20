@@ -8,7 +8,7 @@ A Python FastAPI Cloud Run service that downloads the complete historic results 
 - **URL:** https://fsu1e-991649774709.europe-west2.run.app
 - **Region:** europe-west2 (London)
 - **GCP Project:** chiops
-- **Auth:** Public access (no authentication)
+- **Auth:** API key required (`X-API-Key` header) — key in Secret Manager as `fsu1e-api-key`
 - **CI/CD:** Auto-deploys via Cloud Build on push to `main`
 
 ## Endpoints
@@ -35,12 +35,20 @@ A Python FastAPI Cloud Run service that downloads the complete historic results 
 
 See [DOCS.md](DOCS.md) for comprehensive endpoint reference with request/response examples, architecture diagram, GCS storage structure, and deployment details.
 
+## Authentication
+
+All endpoints require an `X-API-Key` header except `GET /` and `GET /admin/health`.
+
+```
+X-API-Key: <key from Secret Manager: fsu1e-api-key>
+```
+
+- Key stored in GCP Secret Manager as `fsu1e-api-key` (version 1)
+- Service account `991649774709-compute@developer.gserviceaccount.com` has `secretAccessor` role
+- Key is fetched at runtime and cached in memory
+
 ## TODO — Next Session
 
-- [ ] **Add API key authentication** — All endpoints are currently public. Need to:
-  - Generate an API key and store in Google Secret Manager (e.g. `fsu1e-api-key`)
-  - Add middleware requiring `X-API-Key` header on `/api/` and `/admin/` endpoints
-  - Provide the key to the Chimera portal for authenticated requests
 - [ ] **Explore additional Racing API endpoints** — racecards, horses, courses, jockeys, trainers (if available on Pro Plan)
 
 ## Tech Stack

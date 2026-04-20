@@ -3,6 +3,7 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
+from app.auth import APIKeyMiddleware
 from app.routers import api, admin
 from app.state import state
 
@@ -25,6 +26,7 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
+app.add_middleware(APIKeyMiddleware)
 app.include_router(api.router)
 app.include_router(admin.router)
 

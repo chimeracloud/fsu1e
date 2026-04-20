@@ -17,7 +17,7 @@ FSU1E is a Python FastAPI microservice deployed on Google Cloud Run that downloa
 | **Cloud Run URL** | https://fsu1e-991649774709.europe-west2.run.app |
 | **GCS Bucket** | `fsu1e-racingapi-historic-raw` |
 | **Firestore Collection** | `fsu-admin-settings` (document: `fsu1e`) |
-| **Secret Manager Secret** | `racingapi-credentials` |
+| **Secret Manager Secrets** | `racingapi-credentials` (Racing API auth), `fsu1e-api-key` (portal auth) |
 | **Service Account** | `991649774709-compute@developer.gserviceaccount.com` |
 | **GitHub Repo** | `chimeracloud/fsu1e` |
 | **Port** | 8080 |
@@ -61,6 +61,26 @@ FSU1E is a Python FastAPI microservice deployed on Google Cloud Run that downloa
 - **Secrets:** Google Secret Manager
 - **Deployment:** Cloud Run via Cloud Build (triggered by GitHub push)
 - **SSE:** sse-starlette
+
+---
+
+## Authentication
+
+All endpoints require an `X-API-Key` header, except:
+- `GET /` — root
+- `GET /admin/health` — health check (intentionally public for uptime monitors)
+
+```http
+X-API-Key: 17Xgva4qgMQz7AYsM_9MgmzpAqVcXrwvdDYTG3Pl5K8
+```
+
+| Response | Meaning |
+|---|---|
+| `401 Unauthorized` | `X-API-Key` header missing |
+| `403 Forbidden` | Key present but incorrect |
+| `503 Service Unavailable` | Secret Manager unreachable |
+
+The key is fetched from Secret Manager at runtime (`fsu1e-api-key`) and cached in memory per instance.
 
 ---
 
