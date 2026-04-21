@@ -64,6 +64,14 @@ def get_date_range(prefix: str = "results") -> tuple[str | None, str | None]:
     return dates[0], dates[-1]
 
 
+def save_blob(blob_name: str, data: dict | list) -> int:
+    """Save data to an arbitrary GCS path (not date-keyed)."""
+    blob = _bucket().blob(blob_name)
+    payload = json.dumps(data, default=str)
+    blob.upload_from_string(payload, content_type="application/json")
+    return len(payload)
+
+
 def find_gaps(prefix: str = "results") -> list[str]:
     dates = list_result_dates(prefix)
     if len(dates) < 2:
