@@ -2,6 +2,7 @@ import logging
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.auth import APIKeyMiddleware
 from app.routers import api, admin
@@ -26,6 +27,15 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "https://chimerasportstrading.com",
+        "https://www.chimerasportstrading.com",
+    ],
+    allow_methods=["GET", "POST", "PUT", "OPTIONS"],
+    allow_headers=["X-API-Key", "Content-Type", "Authorization"],
+)
 app.add_middleware(APIKeyMiddleware)
 app.include_router(api.router)
 app.include_router(admin.router)
