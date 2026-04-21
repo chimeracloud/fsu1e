@@ -27,6 +27,7 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
+app.add_middleware(APIKeyMiddleware)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -36,7 +37,6 @@ app.add_middleware(
     allow_methods=["GET", "POST", "PUT", "OPTIONS"],
     allow_headers=["X-API-Key", "Content-Type", "Authorization"],
 )
-app.add_middleware(APIKeyMiddleware)
 app.include_router(api.router)
 app.include_router(admin.router)
 
